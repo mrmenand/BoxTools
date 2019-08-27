@@ -2,7 +2,27 @@ import json
 from collections import defaultdict
 import xlrd
 
+parent = ["Water, wild vegetables", "Flower", "Bamboo shoots", "Onion, ginger, garlic", "Pickled salt, fungi", "Chili",
+          "Rhizome beans", "Melon", "Leafy vegetables",
+          "Processed soy products", "Processing dairy products", "Fruit", "Citrus", "Tropical fruit",
+          "Peach and plum jujube", "Melon and fruit", "Pear",
+          "Apple", "Eggs", "Mutton", "Chicken, duck, goose", "Beef", "Pork", "Seafood", "Frozen goods",
+          "Chilled", "Dry goods", "Freshwater live fresh", "North and South dry goods", "Whole grains"]
+ancestor = ["Vegetables", "Manufactured food", "Fresh fruits", "Meat & eggs", "Aquatic species",
+            "Grain & oil non-staple food"]
+
 meal_json = defaultdict(dict)
+meal_parent, meal_ancestor = {}, {}
+
+for i, val in enumerate(parent):
+    meal_parent[i + 1] = val
+
+for i, val in enumerate(ancestor):
+    meal_ancestor[i + 1] = val
+
+meal_json["parent_id"] = meal_parent
+meal_json["ancestor_id"] = meal_ancestor
+
 excel_file = xlrd.open_workbook("./meal1.xlsx")
 sheet1 = excel_file.sheets()[1]
 n_rows = sheet1.nrows
