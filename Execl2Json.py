@@ -23,8 +23,8 @@ for i, val in enumerate(ancestor):
 meal_json["parent_id"] = meal_parent
 meal_json["ancestor_id"] = meal_ancestor
 
-excel_file = xlrd.open_workbook("./meal1.xlsx")
-sheet1 = excel_file.sheets()[1]
+excel_file = xlrd.open_workbook("./Meal80K.xlsx")
+sheet1 = excel_file.sheets()[0]
 n_rows = sheet1.nrows
 for row in range(1, n_rows):
     values = sheet1.row_values(row)
@@ -42,5 +42,5 @@ for row in range(1, n_rows):
     meal_json[meal_type]["parent_id"] = parent_id
     meal_json[meal_type]["ancestor_id"] = ancestor_id
 
-with open("Meal2.json", "w", encoding="utf-8") as js:
+with open("./Meal80K.json", "w", encoding="utf-8") as js:
     json.dump(meal_json, js, ensure_ascii=False)
