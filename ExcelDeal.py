@@ -5,17 +5,21 @@ from collections import defaultdict
 from xlrd import open_workbook
 from xlutils.copy import copy
 
-read_excel = open_workbook("./meal.xlsx") # 用wlrd提供的方法读取一个excel文件
+read_excel = open_workbook("./Meal80K.xlsx") # 用wlrd提供的方法读取一个excel文件
 read_table = read_excel.sheets()[0]
 rows = read_table.nrows # 用wlrd提供的方法获得现在已有的行数
 cols = read_table.ncols # 用wlrd提供的方法获得现在已有的列数
 write_excel = copy(read_excel) # 用xlutils提供的copy方法将xlrd的对象转化为xlwt的对象
 write_table = write_excel.get_sheet(0) # 用xlwt对象的方法获得要操作的sheet
 
-path_of_all = r"/home/guangyixiao/zhangqi/300_exp/all_data"
+path_of_all = r"/home/guangyixiao/zhangqi/300_exp/all_data/"
 list_dirs_data = os.listdir(path_of_all)
+FILTER = ['other','other_weiKaiDai','weiKaiDai']
+if FILTER[0] in list_dirs_data:
+    list_dirs_data = list(set(list_dirs_data)^set(FILTER))
 
 dict_dir_num = defaultdict(list)
+
 for dir in list_dirs_data:
     num_pics = len(os.listdir(path_of_all+"/"+dir))
     dict_dir_num[dir].append(num_pics)
@@ -52,4 +56,4 @@ for k,v in dict_dir_num.items():
         write_table.write(rows, 2, v[0])
         write_table.write(rows, 3, v[1])
         rows += 1
-write_excel.save("./meal1.xlsx") # xlwt对象的保存方法，这时便覆盖掉了原来的excel
+write_excel.save("./Meal80K.xlsx") # xlwt对象的保存方法，这时便覆盖掉了原来的excel
